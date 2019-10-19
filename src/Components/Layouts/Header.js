@@ -5,7 +5,7 @@ import {Drawer, CssBaseline, AppBar, Toolbar, IconButton, Typography, List, Divi
     ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 
 import {Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Search as SearchIcon,
-    MoveToInbox as InboxIcon, Mail as MailIcon, AccountCircle,} from '@material-ui/icons'
+    Public as DiscoveryIcon, EmojiObjects as TheoryIcon, BarChart as ResearchIcon, AccountCircle,} from '@material-ui/icons'
 
 import {makeStyles, useTheme, fade} from '@material-ui/core/styles';
 
@@ -128,6 +128,12 @@ export default function Header(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+
+    const menuItems = [
+        {feed:'Research Feed', post:'Post Research', icon: <ResearchIcon/>},
+        {feed:'Discovery Feed', post:'Post Discovery', icon: <DiscoveryIcon/>},
+        {feed:'Theory Feed', post:'Post Theory', icon: <TheoryIcon/>}
+        ];
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -291,19 +297,19 @@ export default function Header(props) {
                 </div>
                 <Divider/>
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                            <ListItemText primary={text}/>
+                    {menuItems.map((obj, index) => (
+                        <ListItem button key={obj.feed}>
+                            <ListItemIcon>{obj.icon}</ListItemIcon>
+                            <ListItemText primary={obj.feed}/>
                         </ListItem>
                     ))}
                 </List>
                 <Divider/>
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                            <ListItemText primary={text}/>
+                    {menuItems.map((obj, index) => (
+                        <ListItem button key={obj.post}>
+                            <ListItemIcon>{obj.icon}</ListItemIcon>
+                            <ListItemText primary={obj.post}/>
                         </ListItem>
                     ))}
                 </List>
