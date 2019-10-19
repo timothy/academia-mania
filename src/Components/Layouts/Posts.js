@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 export default props =>
     <div>
         {
-            console.log(props.location)
+            console.log(props.match)
         }
-        <h1>Body</h1>
+        <h1>{props.match.params.id}</h1>
         <button onClick={() => {
             props.history.push('/1');
         }}>
