@@ -1,15 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {MyEditor} from './index'
 
 export default props =>
     <div>
-        {
-            console.log(props.match)
-        }
-        <h1>{props.match.params.id}</h1>
+        <h1>post</h1>
+        <MyEditor/>
         <button onClick={() => {
-            props.history.push('/1');
+            props.history.push('/');
         }}>
-            Footer
+            body
         </button>
     </div>

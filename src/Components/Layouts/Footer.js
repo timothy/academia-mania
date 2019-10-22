@@ -5,5 +5,5 @@ export default props =>
     <div>
         <h1>Footer</h1>
         <Link to="/">Go to home</Link>
-
+        {console.log(props.match)}
     </div>

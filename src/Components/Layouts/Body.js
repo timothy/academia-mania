@@ -8,8 +8,8 @@ export default props =>
         }
         <h1>Body</h1>
         <button onClick={() => {
-            props.history.push('/1');
+            props.history.push('/posts');
         }}>
-            Footer
+           go to Posts
         </button>
     </div>

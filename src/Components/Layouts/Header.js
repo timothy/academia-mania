@@ -9,6 +9,9 @@ import {Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as Chevro
 
 import {makeStyles, useTheme, fade} from '@material-ui/core/styles';
 
+//import { Route, MemoryRouter } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
@@ -125,6 +128,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header(props) {
+    const { to } = props;
+    const postLink = React.useMemo(
+        () =>
+            React.forwardRef((itemProps, ref) => (
+                // With react-router-dom@^6.0.0 use `ref` instead of `innerRef`
+                // See https://github.com/ReactTraining/react-router/issues/6056
+                <RouterLink to={"/posts"} {...itemProps} innerRef={ref} />
+            )),
+        [to],
+    );
+
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -307,7 +321,7 @@ export default function Header(props) {
                 <Divider/>
                 <List>
                     {menuItems.map((obj, index) => (
-                        <ListItem button key={obj.post}>
+                        <ListItem button component={postLink}>
                             <ListItemIcon>{obj.icon}</ListItemIcon>
                             <ListItemText primary={obj.post}/>
                         </ListItem>

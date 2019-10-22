@@ -10,6 +10,7 @@ export default class extends Component {
                     <Switch>
                         <Route path="/" exact component={Body} />
                         <Route path="/posts/:id" exact component={Posts} />
+                        <Route path="/posts" exact component={Posts} />
                         <Route path="/1" exact component={Footer} />
                         <Route path="/" render={(props) => {
                             console.log(props.location);
