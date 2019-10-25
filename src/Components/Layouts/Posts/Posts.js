@@ -4,7 +4,7 @@ import {MyEditor} from './index'
 
 export default props =>
     <div>
-        <h1>post</h1>
+        <h1>Post</h1>
         <MyEditor/>
         <button onClick={() => {
             props.history.push('/');
