@@ -1,16 +1,21 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import {Drawer, CssBaseline, AppBar, Toolbar, IconButton, Typography, List, Divider, InputBase, Badge, MenuItem, Menu,
-    ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {
+    Drawer, CssBaseline, AppBar, Toolbar, IconButton, Typography, List, Divider, InputBase, Badge, MenuItem, Menu,
+    ListItem, ListItemIcon, ListItemText
+} from '@material-ui/core';
 
-import {Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Search as SearchIcon,
-    Public as DiscoveryIcon, EmojiObjects as TheoryIcon, BarChart as ResearchIcon, AccountCircle,} from '@material-ui/icons'
+import {
+    Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, Search as SearchIcon,
+    Public as DiscoveryIcon, EmojiObjects as TheoryIcon, BarChart as ResearchIcon, AccountCircle,
+    Home as HomeIcon
+} from '@material-ui/icons'
 
 import {makeStyles, useTheme, fade} from '@material-ui/core/styles';
 
 //import { Route, MemoryRouter } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -128,13 +133,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header(props) {
-    const { to } = props;
+    const {to} = props;
+    const HomeLink = React.forwardRef((props, ref) => (
+        <RouterLink innerRef={ref} to="/" {...props} />
+    ));
     const postLink = React.useMemo(
         () =>
             React.forwardRef((itemProps, ref) => (
                 // With react-router-dom@^6.0.0 use `ref` instead of `innerRef`
                 // See https://github.com/ReactTraining/react-router/issues/6056
-                <RouterLink to={"/posts"} {...itemProps} innerRef={ref} />
+                <RouterLink to={"/posts"} {...itemProps} innerRef={ref}/>
             )),
         [to],
     );
@@ -144,10 +152,10 @@ export default function Header(props) {
     const [open, setOpen] = React.useState(false);
 
     const menuItems = [
-        {feed:'Research Feed', post:'Post Research', icon: <ResearchIcon/>},
-        {feed:'Discovery Feed', post:'Post Discovery', icon: <DiscoveryIcon/>},
-        {feed:'Theory Feed', post:'Post Theory', icon: <TheoryIcon/>}
-        ];
+        {feed: 'Research Feed', post: 'Post Research', icon: <ResearchIcon/>},
+        {feed: 'Discovery Feed', post: 'Post Discovery', icon: <DiscoveryIcon/>},
+        {feed: 'Theory Feed', post: 'Post Theory', icon: <TheoryIcon/>}
+    ];
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -184,10 +192,10 @@ export default function Header(props) {
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={menuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
@@ -200,10 +208,10 @@ export default function Header(props) {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={mobileMenuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
@@ -228,7 +236,7 @@ export default function Header(props) {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AccountCircle/>
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -259,7 +267,7 @@ export default function Header(props) {
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon />
+                            <SearchIcon/>
                         </div>
                         <InputBase
                             placeholder="Search…"
@@ -267,10 +275,10 @@ export default function Header(props) {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{'aria-label': 'search'}}
                         />
                     </div>
-                    <div className={classes.grow} />
+                    <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
                         <IconButton
                             edge="end"
@@ -280,7 +288,7 @@ export default function Header(props) {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle/>
                         </IconButton>
                     </div>
                     <div className={classes.sectionMobile}>
@@ -309,6 +317,12 @@ export default function Header(props) {
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                     </IconButton>
                 </div>
+                <List>
+                    <ListItem button component={HomeLink}>
+                        <ListItemIcon><HomeIcon/></ListItemIcon>
+                        <ListItemText primary={"Home"}/>
+                    </ListItem>
+                </List>
                 <Divider/>
                 <List>
                     {menuItems.map((obj, index) => (
