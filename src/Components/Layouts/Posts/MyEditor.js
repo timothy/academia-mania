@@ -19,15 +19,19 @@ const useStyles = makeStyles(theme => ({
 
 export default props => {
     const classes = useStyles();
+    let [editorState, updateEditorState] = useState(createEditorState());
+    //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
+    const saveBtn = () => {
+        const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
+        console.log(renderedHTML.toString());
+        console.log("saveBtn was clicked")
+    };
 
     const renderSaveBtn = (
-        <Fab color="primary" aria-label="add" className={classes.fab}>
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={saveBtn}>
             <SaveAltIcon/>
         </Fab>
     );
-
-    let [editorState, updateEditorState] = useState(createEditorState());
-    //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
 
     const onChange = (editorState) => {
         updateEditorState(editorState);
@@ -39,11 +43,7 @@ export default props => {
         refsEditor.current.focus();
     };
 
-    const saveBtn = () => {
-        const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
 
-        console.log(renderedHTML.toString());
-    };
 
     return (
         <div>
