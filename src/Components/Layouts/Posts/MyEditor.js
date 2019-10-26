@@ -1,53 +1,59 @@
-import React from 'react';
-import {
-    ImageSideButton,
-    Block,
-    addNewBlock,
-    createEditorState,
-    Editor,
-} from 'medium-draft';
+import React, {useState, useEffect} from 'react';
+
+import {ImageSideButton, Block, addNewBlock, createEditorState, Editor} from 'medium-draft';
 import 'isomorphic-fetch';
 import 'medium-draft/lib/index.css';
+import {makeStyles} from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import mediumDraftExporter from 'medium-draft/lib/exporter';
 
+const useStyles = makeStyles(theme => ({
+    fab: {
+        margin: theme.spacing(1),
+    },
+    extendedIcon: {
+        marginRight: theme.spacing(1),
+    },
+}));
 
-// Now pass this component instead of default prop to Editor example above.
-class MyEditor extends React.Component {
-    constructor(props) {
-        super(props);
+export default props => {
+    const classes = useStyles();
 
+    const renderSaveBtn = (
+        <Fab color="primary" aria-label="add" className={classes.fab}>
+            <SaveAltIcon/>
+        </Fab>
+    );
 
-        this.state = {
-            editorState: createEditorState(), // for empty content
-        };
+    let [editorState, updateEditorState] = useState(createEditorState());
+    //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
 
-        /*
-        this.state = {
-          editorState: createEditorState(data), // with content
-        };
-        */
+    const onChange = (editorState) => {
+        updateEditorState(editorState);
+    };
 
-        this.onChange = (editorState) => {
-            this.setState({ editorState });
-        };
+    const refsEditor = React.createRef();
 
-        this.refsEditor = React.createRef()
+    const componentDidMount = () => {
+        refsEditor.current.focus();
+    };
 
-    }
+    const saveBtn = () => {
+        const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
 
-    componentDidMount() {
-        this.refsEditor.current.focus();
-    }
+        console.log(renderedHTML.toString());
+    };
 
-    render() {
-        const { editorState } = this.state;
-        return (
-            <Editor
-                ref={this.refsEditor}
-                editorState={editorState}
-                onChange={this.onChange}
-                sideButtons={this.sideButtons}
-            />
-        );
-    }
+    return (
+        <div>
+            <Editor ref={refsEditor}
+                    editorState={editorState}
+                    onChange={onChange}
+                    sideButtons={props.sideButtons}>
+            </Editor>
+            {renderSaveBtn}
+        </div>
+
+    );
 }
-export default MyEditor;

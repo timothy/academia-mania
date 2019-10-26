@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.0",
     "@material-ui/icons": "^4.4.3",
+    "draft-convert": "^2.1.8",
     "medium-draft": "^0.5.18",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
