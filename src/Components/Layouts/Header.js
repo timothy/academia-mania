@@ -132,7 +132,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Header(props) {
+export default props => {
     const {to} = props;
     const HomeLink = React.forwardRef((props, ref) => (
         <RouterLink innerRef={ref} to="/" {...props} />
