@@ -26,9 +26,12 @@ export default props => {
         const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
         pub("POSTS", {
             renderedHTML: renderedHTML,
-            title: "",
-            description:"",
-            user: "",
+            title: "Test",
+            description:"This is a long description. It is meant to show what someone might put to give an overview of what they did.",
+            user: "Timothy",
+            up_votes: 0,
+            down_votes: 0,
+            topic:"",
             id:0
         });
         console.log(renderedHTML.toString());
