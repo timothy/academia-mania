@@ -7,6 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import mediumDraftExporter from 'medium-draft/lib/exporter';
+import {myState, pub} from '../../../PubSub/pub-sub'
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -23,6 +24,13 @@ export default props => {
     //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
     const saveBtn = () => {
         const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
+        pub("POSTS", {
+            renderedHTML: renderedHTML,
+            title: "",
+            description:"",
+            user: "",
+            id:0
+        });
         console.log(renderedHTML.toString());
         console.log("saveBtn was clicked")
     };
