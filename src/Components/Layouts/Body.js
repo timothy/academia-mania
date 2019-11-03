@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback } from 'react';
 import {withStyles, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {myState} from '../../PubSub/pub-sub'
 
 
 const StyledTableCell = withStyles(theme => ({
@@ -27,7 +28,6 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow);
 
 
-
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
@@ -46,38 +46,34 @@ export default props => {
         return name.toLowerCase().includes(props.searchData.title.toLowerCase());
     }
 
-    function createData(name, calories, fat, carbs, protein) {
-        if(filter(name, calories, fat, carbs, protein)){
+    function createData(title, description, user, up_votes, down_votes) {
+        if (filter(title, description, user, up_votes, down_votes)) {
             return (
-                <StyledTableRow key={name}>
-                    <StyledTableCell>{name}</StyledTableCell>
-                    < StyledTableCell>{calories}</StyledTableCell>
-                    <StyledTableCell>{fat}</StyledTableCell>
-                    <StyledTableCell>{carbs}</StyledTableCell>
-                    <StyledTableCell>{protein}</StyledTableCell>
+                <StyledTableRow key={title}>
+                    <StyledTableCell>{title}</StyledTableCell>
+                    < StyledTableCell>{description}</StyledTableCell>
+                    <StyledTableCell>{user}</StyledTableCell>
+                    <StyledTableCell>{up_votes}</StyledTableCell>
+                    <StyledTableCell>{down_votes}</StyledTableCell>
                 </StyledTableRow>
             )
         }
     }
 
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
+    const rows = myState.rows.map(
+        obj => createData(obj.title, obj.description, obj.user, obj.up_votes, obj.down_votes)
+    );
 
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                        <StyledTableCell align="right">Calories</StyledTableCell>
-                        <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                        <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                        <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+                        <StyledTableCell>Title</StyledTableCell>
+                        <StyledTableCell>Description</StyledTableCell>
+                        <StyledTableCell>User</StyledTableCell>
+                        <StyledTableCell>Up Votes</StyledTableCell>
+                        <StyledTableCell>Down Votes</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

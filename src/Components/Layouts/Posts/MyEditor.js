@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
-import {ImageSideButton, Block, addNewBlock, createEditorState, Editor} from 'medium-draft';
+import {createEditorState, Editor} from 'medium-draft';
 import 'isomorphic-fetch';
 import 'medium-draft/lib/index.css';
 import {makeStyles} from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import mediumDraftExporter from 'medium-draft/lib/exporter';
-import {myState, pub} from '../../../PubSub/pub-sub'
+import {addToState} from '../../../PubSub/pub-sub'
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -24,7 +24,7 @@ export default props => {
     //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
     const saveBtn = () => {
         const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
-        pub("POSTS", {
+        addToState("rows", {
             renderedHTML: renderedHTML,
             title: "Test",
             description:"This is a long description. It is meant to show what someone might put to give an overview of what they did.",
