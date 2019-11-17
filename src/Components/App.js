@@ -369,6 +369,7 @@ export default props => {
                         <Route path="/posts/:id" exact component={Posts}/>
                         <Route path="/posts" exact component={Posts}/>
                         <Route path="/viewpost" exact component={ViewPost}/>
+                        <Route path="/viewpost/:id" exact component={ViewPost}/>
                         <Route path="/1" exact component={Footer}/>
                         <Route path="/" render={(props) => {
                             console.log(props.location);

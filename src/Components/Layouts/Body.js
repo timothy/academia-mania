@@ -90,7 +90,7 @@ export default props => {
 
     function createData(title, description, user, up_votes, down_votes, id) {
         if (filter(title, description, user, up_votes, down_votes)) {
-            function handleCLick() {history.push('/viewpost');}
+            function handleCLick() {history.push(`/viewpost/${id}`);}
             return (
                 <StyledTableRow key={id + "tableKey"}>
                     <StyledTableCell onClick={handleCLick}>{title}</StyledTableCell>
