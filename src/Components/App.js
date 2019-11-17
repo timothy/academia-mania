@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import {Footer, Body, Posts} from "./Layouts"
+import {Footer, Body, Posts, ViewPost} from "./Layouts"
 
 import {
     Drawer, CssBaseline, AppBar, Toolbar, IconButton, Typography, List, Divider, InputBase, Badge, MenuItem, Menu,
@@ -350,7 +350,7 @@ export default props => {
                     <Divider/>
                     <List>
                         {menuItems.map((obj, index) => (
-                            <ListItem button component={postLink}>
+                            <ListItem button key={obj.feed} component={postLink}>
                                 <ListItemIcon>{obj.icon}</ListItemIcon>
                                 <ListItemText primary={obj.post}/>
                             </ListItem>
@@ -368,6 +368,7 @@ export default props => {
                         <Route path="/" exact render={() => <Body searchData={search}/>}/>
                         <Route path="/posts/:id" exact component={Posts}/>
                         <Route path="/posts" exact component={Posts}/>
+                        <Route path="/viewpost" exact component={ViewPost}/>
                         <Route path="/1" exact component={Footer}/>
                         <Route path="/" render={(props) => {
                             console.log(props.location);

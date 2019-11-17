@@ -1,10 +1,11 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {withStyles, makeStyles} from '@material-ui/core/styles';
 import {Paper, TableRow, TableHead, TableCell, TableBody, Table, Badge, Fab} from '@material-ui/core'
 import {myState} from '../../PubSub/pub-sub'
+import { useHistory } from "react-router-dom";
 
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import {ThumbUp as ThumbUpIcon,
+        ThumbDown as ThumbDownIcon} from '@material-ui/icons';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -51,30 +52,30 @@ const useStyles = makeStyles(theme => ({
 export default props => {
     const classes = useStyles();
 
-
+    let history = useHistory();
+    let [postState, setPostState] = useState(myState.posts);// why does setPostState not update badge count???? or re-render component???
     let upVote = (id) => {
         let objIndex = myState.posts.findIndex((obj => obj.id == id));
         return (
-            <Fab color="primary" aria-label="add" className={classes.fab}
-                 onClick={() => { console.log(id, myState.posts[objIndex]);
+            <Fab key={"upVote4309lk" + id} color="primary" aria-label="add" className={classes.fab}
+                 onClick={() => {
                      myState.posts[objIndex].up_vote++;
+                     setPostState([...myState.posts]);
                  }}>
-            <Badge className={classes.margin} badgeContent={myState.posts[objIndex].up_vote} color="primary"><
-                ThumbUpIcon onClick={() => {
-                    console.log(id, myState.posts[objIndex]);
-                myState.posts[objIndex].up_vote++;
-            }}> </ThumbUpIcon>
-            </Badge>
+                <Badge key={"Ubadge" + objIndex} className={classes.margin} badgeContent={postState[objIndex].up_vote}
+                       color="primary"><
+                    ThumbUpIcon> </ThumbUpIcon>
+                </Badge>
             </Fab>
         )
     };
-
     let downVote = (id) => {
         let objIndex = myState.posts.findIndex((obj => obj.id == id));
         return (
-            <Fab color="primary" aria-label="add" className={classes.fab}
-                 onClick={() => { console.log(id, myState.posts[objIndex]);
+            <Fab key={"downVote0940v" + id} color="primary" aria-label="add" className={classes.fab}
+                 onClick={() => {
                      myState.posts[objIndex].down_vote++;
+                     setPostState([...myState.posts]);
                  }}>
                 <Badge className={classes.margin} badgeContent={myState.posts[objIndex].down_vote} color="primary"><
                     ThumbDownIcon> </ThumbDownIcon>
@@ -83,17 +84,18 @@ export default props => {
         )
     };
 
-    function filter(name, calories, fat, carbs, protein) {
+    function filter(name) {
         return name.toLowerCase().includes(props.searchData.title.toLowerCase());
     }
 
     function createData(title, description, user, up_votes, down_votes, id) {
         if (filter(title, description, user, up_votes, down_votes)) {
+            function handleCLick() {history.push('/viewpost');}
             return (
-                <StyledTableRow key={id}>
-                    <StyledTableCell>{title}</StyledTableCell>
-                    < StyledTableCell>{description}</StyledTableCell>
-                    <StyledTableCell>{user}</StyledTableCell>
+                <StyledTableRow key={id + "tableKey"}>
+                    <StyledTableCell onClick={handleCLick}>{title}</StyledTableCell>
+                    < StyledTableCell onClick={handleCLick}>{description}</StyledTableCell>
+                    <StyledTableCell onClick={handleCLick}>{user}</StyledTableCell>
                     <StyledTableCell>{upVote(id)}</StyledTableCell>
                     <StyledTableCell>{downVote(id)}</StyledTableCell>
                 </StyledTableRow>

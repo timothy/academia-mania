@@ -1,7 +1,7 @@
 import Footer from "./Footer"
 import Body from "./Body"
-import Posts from "./Posts/Posts"
+import {Posts, ViewPost} from "./Posts"
 
 export {
-    Footer, Body, Posts
+    Footer, Body, Posts, ViewPost
 }

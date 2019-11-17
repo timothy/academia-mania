@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 import {MyEditor} from './index'
 
 export default props =>
@@ -8,6 +7,7 @@ export default props =>
         <MyEditor/>
         <button onClick={() => {
             props.history.push('/');
+            console.log(props, "posts props")
         }}>
             body
         </button>
