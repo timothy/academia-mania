@@ -29,8 +29,8 @@ export default props => {
             title: "Test",
             description:"This is a long description. It is meant to show what someone might put to give an overview of what they did.",
             user: "Timothy",
-            up_votes: 0,
-            down_votes: 0,
+            up_vote: 0,
+            down_vote: 0,
             topic:"",
             id: myState.posts.length
         });
