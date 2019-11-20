@@ -1,13 +1,13 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import {Link, useParams} from "react-router-dom";
-import {myState} from '../../../PubSub/pub-sub'
+import {myState} from '../../../PubSub/pub-sub';
 import 'medium-draft/lib/index.css';
-import 'medium-draft/lib/basic.css'
+import 'medium-draft/lib/basic.css';
 import 'isomorphic-fetch';
 
 export default props => {
-    let id = (useParams().id) ? useParams().id : 0;
+    let id = (useParams().id && myState.posts[useParams().id]) ? useParams().id : 0;
 
     console.log(id);
 
