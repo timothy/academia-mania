@@ -88,14 +88,14 @@ export default props => {
         return name.toLowerCase().includes(props.searchData.title.toLowerCase());
     }
 
-    function createData(title, description, user, up_votes, down_votes, id) {
-        if (filter(title, description, user, up_votes, down_votes)) {
+    function createData(title, description, category, up_votes, down_votes, id) {
+        if (filter(title, description, category, up_votes, down_votes)) {
             function handleCLick() {history.push(`/viewpost/${id}`);}
             return (
                 <StyledTableRow key={id + "tableKey"}>
                     <StyledTableCell onClick={handleCLick}>{title}</StyledTableCell>
                     < StyledTableCell onClick={handleCLick}>{description}</StyledTableCell>
-                    <StyledTableCell onClick={handleCLick}>{user}</StyledTableCell>
+                    <StyledTableCell onClick={handleCLick}>{category}</StyledTableCell>
                     <StyledTableCell>{upVote(id)}</StyledTableCell>
                     <StyledTableCell>{downVote(id)}</StyledTableCell>
                 </StyledTableRow>
@@ -104,7 +104,7 @@ export default props => {
     }
 
     const rows = myState.posts.map(
-        obj => createData(obj.title, obj.description, obj.user, obj.up_votes, obj.down_votes, obj.id)
+        obj => createData(obj.title, obj.description, obj.topic, obj.up_votes, obj.down_votes, obj.id)
     );
 
     return (
@@ -114,7 +114,7 @@ export default props => {
                     <TableRow>
                         <StyledTableCell>Title</StyledTableCell>
                         <StyledTableCell>Description</StyledTableCell>
-                        <StyledTableCell>User</StyledTableCell>
+                        <StyledTableCell>Category</StyledTableCell>
                         <StyledTableCell>Up Votes</StyledTableCell>
                         <StyledTableCell>Down Votes</StyledTableCell>
                     </TableRow>

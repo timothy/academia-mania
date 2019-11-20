@@ -1,17 +1,20 @@
 import React from 'react';
 import {Link, useParams} from "react-router-dom";
 import {myState} from '../../../PubSub/pub-sub'
+import 'medium-draft/lib/index.css';
+import 'medium-draft/lib/basic.css'
+import 'isomorphic-fetch';
 
 export default props => {
-    let {id} = useParams();
+    let id  = (useParams().id) ? useParams().id: 0;
 
-    console.log(myState);
+    console.log(id);
 
     return <div>
-        <h1>View Posts Page ID:{id}</h1>
+        <h1>{myState.posts[id].topic} Post</h1>
+        <h2>ID:{id}</h2>
         <div dangerouslySetInnerHTML={{ __html: myState.posts[id].renderedHTML }}></div>
         <Link to="/">Go to home</Link>
         {console.log(props.match)}
     </div>
 }
-

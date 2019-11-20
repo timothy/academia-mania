@@ -149,11 +149,19 @@ export default props => {
     const HomeLink = React.forwardRef((props, ref) => (
         <RouterLink innerRef={ref} to="/" {...props} />
     ));
-    const postLink = React.forwardRef((itemProps, ref) => (
+    const postLink = (post) => {
+        return React.forwardRef((itemProps, ref) => (
                 // With react-router-dom@^6.0.0 use `ref` instead of `innerRef`
                 // See https://github.com/ReactTraining/react-router/issues/6056
-                <RouterLink to={"/posts"} {...itemProps} innerRef={ref}/>
-            ));
+                <RouterLink to={`/posts/${post}`} {...itemProps} innerRef={ref}/>
+            ))};
+
+    const feedLink = (feed) => {
+        return React.forwardRef((itemProps, ref) => (
+            // With react-router-dom@^6.0.0 use `ref` instead of `innerRef`
+            // See https://github.com/ReactTraining/react-router/issues/6056
+            <RouterLink to={`/filterbytype/${feed}`} {...itemProps} innerRef={ref}/>
+        ))};
 
     const classes = useStyles();
     const theme = useTheme();
@@ -225,14 +233,14 @@ export default props => {
         >
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary" children={""}>
+                    <Badge badgeContent={4} color="secondary">
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary" children={""}>
+                    <Badge badgeContent={11} color="secondary">
                     </Badge>
                 </IconButton>
                 <p>Notifications</p>
@@ -336,7 +344,7 @@ export default props => {
                 <Divider/>
                 <List>
                     {menuItems.map((obj, index) => (
-                        <ListItem button key={obj.feed}>
+                        <ListItem button key={obj.feed} component={feedLink(obj.feed.replace("Feed","").trim())}>
                             <ListItemIcon>{obj.icon}</ListItemIcon>
                             <ListItemText primary={obj.feed}/>
                         </ListItem>
@@ -345,7 +353,7 @@ export default props => {
                 <Divider/>
                 <List>
                     {menuItems.map((obj, index) => (
-                        <ListItem button key={obj.feed} component={postLink}>
+                        <ListItem button key={obj.post} component={postLink(obj.post)}>
                             <ListItemIcon>{obj.icon}</ListItemIcon>
                             <ListItemText primary={obj.post}/>
                         </ListItem>
@@ -361,6 +369,7 @@ export default props => {
 
                 <Switch>
                     <Route path="/" exact render={() => <Body searchData={search}/>}/>
+                    <Route path="/filterbytype/:type" exact render={() => <Body searchData={search}/>}/>
                     <Route path="/posts/:id" exact component={Posts}/>
                     <Route path="/posts" exact component={Posts}/>
                     <Route path="/viewpost" exact component={ViewPost}/>

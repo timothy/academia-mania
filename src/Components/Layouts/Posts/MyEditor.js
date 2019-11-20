@@ -24,14 +24,15 @@ export default props => {
     //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
     const saveBtn = () => {
         const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
+        console.log(props.postType);
         addToState("posts", {
             renderedHTML: renderedHTML,
             title: "Test",
-            description:"This is a long description. It is meant to show what someone might put to give an overview of what they did.",
+            description: "This is a long description. It is meant to show what someone might put to give an overview of what they did.",
             user: "Timothy",
             up_vote: 0,
             down_vote: 0,
-            topic:"",
+            topic: props.postType,
             id: myState.posts.length
         });
         console.log(renderedHTML.toString());
@@ -53,8 +54,6 @@ export default props => {
     const componentDidMount = () => {
         refsEditor.current.focus();
     };
-
-
 
     return (
         <div>

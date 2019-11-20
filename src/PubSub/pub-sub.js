@@ -1,3 +1,6 @@
+import {BarChart as ResearchIcon, EmojiObjects as TheoryIcon, Public as DiscoveryIcon} from "@material-ui/icons";
+//import React from "react";
+
 let pubSubList = {};
 export let myState = {};
 
@@ -11,9 +14,9 @@ export let stateBind = () => {
     return myState;
 };
 
-export let findID = (id) =>{
+export let findID = (id) => {
     nullCheck("posts", myState);
-    return myState.posts.findIndex((obj => obj.id == id));
+    return myState.posts.findIndex((obj => obj.id === id));
 };
 
 /**
@@ -58,19 +61,54 @@ let nullCheck = (property, obj = pubSubList) => {
     obj = !obj ? {} : obj;
     obj[property] = !obj[property] ? [] : obj[property];
 };
-
+/*{feed: 'Research Feed', post: 'Post Research', icon: <ResearchIcon/>},
+{feed: 'Discovery Feed', post: 'Post Discovery', icon: <DiscoveryIcon/>},
+{feed: 'Theory Feed', post: 'Post Theory', icon: <TheoryIcon/>}*/
 const rows = [
     {
         title: 'Rockets',
         description: 'Outer space rockets and moon landings',
-        user: 'rocket man',
+        topic: "Research",
+        user: 'Space Cadet',
         up_vote: 24,
         down_vote: 4.0,
         id: 0
     },
-    {title: 'Ice cream sandwich', description: "237", user: 9.0, up_vote: 37, down_vote: 4.3, id: 1},
-    {title: 'Eclair', description: '262', user: 'bob', up_vote: 24, down_vote: 6.0, id: 2},
-    {title: 'Cupcake', description: 'something good to eat', user: 'Goose', up_vote: 67, down_vote: 4.3, id: 3},
-    {title: 'Gingerbread', description: 'Food that is alive', user: 'VoteMeUp', up_vote: 49, down_vote: 3.9, id: 4},
+    {
+        title: 'Nuclear fusion',
+        description: "Creating energy that is really power full",
+        topic: "Discovery",
+        user: "Jake",
+        up_vote: 37,
+        down_vote: 4,
+        id: 1
+    },
+    {
+        title: 'Hashing algorithms',
+        description: 'Hashing everything to get O(1)',
+        topic: "Theory",
+        user: 'Bob',
+        up_vote: 24,
+        down_vote: 6.0,
+        id: 2
+    },
+    {
+        title: 'Sound waves',
+        description: 'breaking glass, tables, brick, and wood using sound waves',
+        topic: "Discovery",
+        user: 'Goose',
+        up_vote: 67,
+        down_vote: 4,
+        id: 3
+    },
+    {
+        title: 'Gravity',
+        description: 'Gravitation in the center of the earth',
+        topic: "Theory",
+        user: 'VoteMeUp',
+        up_vote: 49,
+        down_vote: 3,
+        id: 4
+    },
 ];
 myState.posts = rows;
