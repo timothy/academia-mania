@@ -145,19 +145,15 @@ export default props => {
     const handleChange = prop => event => {
         setSearch({...search, [prop]: event.target.value});
     };
-    const {to} = props;
+
     const HomeLink = React.forwardRef((props, ref) => (
         <RouterLink innerRef={ref} to="/" {...props} />
     ));
-    const postLink = React.useMemo(
-        () =>
-            React.forwardRef((itemProps, ref) => (
+    const postLink = React.forwardRef((itemProps, ref) => (
                 // With react-router-dom@^6.0.0 use `ref` instead of `innerRef`
                 // See https://github.com/ReactTraining/react-router/issues/6056
                 <RouterLink to={"/posts"} {...itemProps} innerRef={ref}/>
-            )),
-        [to],
-    );
+            ));
 
     const classes = useStyles();
     const theme = useTheme();
@@ -229,14 +225,14 @@ export default props => {
         >
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
+                    <Badge badgeContent={4} color="secondary" children={""}>
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
+                    <Badge badgeContent={11} color="secondary" children={""}>
                     </Badge>
                 </IconButton>
                 <p>Notifications</p>
@@ -255,132 +251,130 @@ export default props => {
         </Menu>
     );
 
-    return (
-        <BrowserRouter>
-            <div className={classes.root}>
-                <CssBaseline/>
-                <AppBar
-                    position="fixed"
-                    className={clsx(classes.appBar, {
-                        [classes.appBarShift]: open,
-                    })}
-                >
-                    <Toolbar>
+    return <BrowserRouter>
+        <div className={classes.root}>
+            <CssBaseline/>
+            <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        className={clsx(classes.menuButton, open && classes.hide)}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Academia-Mania
+                    </Typography>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon/>
+                        </div>
+                        <InputBase
+                            placeholder="Search…"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{'aria-label': 'search'}}
+                            value={search.title}
+                            onChange={handleChange('title')}
+                        />
+                    </div>
+                    <div className={classes.grow}/>
+                    <div className={classes.sectionDesktop}>
                         <IconButton
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
                             color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, open && classes.hide)}
                         >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" noWrap>
-                            Academia-Mania
-                        </Typography>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon/>
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{'aria-label': 'search'}}
-                                value={search.title}
-                                onChange={handleChange('title')}
-                            />
-                        </div>
-                        <div className={classes.grow}/>
-                        <div className={classes.sectionDesktop}>
-                            <IconButton
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle/>
-                            </IconButton>
-                        </div>
-                        <div className={classes.sectionMobile}>
-                            <IconButton
-                                aria-label="show more"
-                                aria-controls={mobileMenuId}
-                                aria-haspopup="true"
-                                onClick={handleMobileMenuOpen}
-                                color="inherit"
-                            >
-                            </IconButton>
-                        </div>
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                            <AccountCircle/>
                         </IconButton>
                     </div>
-                    <List>
-                        <ListItem button component={HomeLink}>
-                            <ListItemIcon><HomeIcon/></ListItemIcon>
-                            <ListItemText primary={"Home"}/>
+                    <div className={classes.sectionMobile}>
+                        <IconButton
+                            aria-label="show more"
+                            aria-controls={mobileMenuId}
+                            aria-haspopup="true"
+                            onClick={handleMobileMenuOpen}
+                            color="inherit"
+                        >
+                        </IconButton>
+                    </div>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={open}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            >
+                <div className={classes.drawerHeader}>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                    </IconButton>
+                </div>
+                <List>
+                    <ListItem button component={HomeLink}>
+                        <ListItemIcon><HomeIcon/></ListItemIcon>
+                        <ListItemText primary={"Home"}/>
+                    </ListItem>
+                </List>
+                <Divider/>
+                <List>
+                    {menuItems.map((obj, index) => (
+                        <ListItem button key={obj.feed}>
+                            <ListItemIcon>{obj.icon}</ListItemIcon>
+                            <ListItemText primary={obj.feed}/>
                         </ListItem>
-                    </List>
-                    <Divider/>
-                    <List>
-                        {menuItems.map((obj, index) => (
-                            <ListItem button key={obj.feed}>
-                                <ListItemIcon>{obj.icon}</ListItemIcon>
-                                <ListItemText primary={obj.feed}/>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider/>
-                    <List>
-                        {menuItems.map((obj, index) => (
-                            <ListItem button key={obj.feed} component={postLink}>
-                                <ListItemIcon>{obj.icon}</ListItemIcon>
-                                <ListItemText primary={obj.post}/>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <main
-                    className={clsx(classes.content, {
-                        [classes.contentShift]: open,
-                    })}
-                >
-                    <div className={classes.drawerHeader}/>
+                    ))}
+                </List>
+                <Divider/>
+                <List>
+                    {menuItems.map((obj, index) => (
+                        <ListItem button key={obj.feed} component={postLink}>
+                            <ListItemIcon>{obj.icon}</ListItemIcon>
+                            <ListItemText primary={obj.post}/>
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
+            <main
+                className={clsx(classes.content, {
+                    [classes.contentShift]: open,
+                })}
+            >
+                <div className={classes.drawerHeader}/>
 
-                    <Switch>
-                        <Route path="/" exact render={() => <Body searchData={search}/>}/>
-                        <Route path="/posts/:id" exact component={Posts}/>
-                        <Route path="/posts" exact component={Posts}/>
-                        <Route path="/viewpost" exact component={ViewPost}/>
-                        <Route path="/viewpost/:id" exact component={ViewPost}/>
-                        <Route path="/1" exact component={Footer}/>
-                        <Route path="/" render={(props) => {
-                            console.log(props.location);
-                            return (<div>404 Path "{props.location.pathname}" not found</div>)
-                        }}/>
-                    </Switch>
-                    {search.title}
-                </main>
-                {renderMobileMenu}
-                {renderMenu}
-            </div>
-        </BrowserRouter>
-    );
+                <Switch>
+                    <Route path="/" exact render={() => <Body searchData={search}/>}/>
+                    <Route path="/posts/:id" exact component={Posts}/>
+                    <Route path="/posts" exact component={Posts}/>
+                    <Route path="/viewpost" exact component={ViewPost}/>
+                    <Route path="/viewpost/:id" exact component={ViewPost}/>
+                    <Route path="/1" exact component={Footer}/>
+                    <Route path="/" render={(props) => {
+                        console.log(props.location);
+                        return (<div>404 Path "{props.location.pathname}" not found</div>)
+                    }}/>
+                </Switch>
+                {search.title}
+            </main>
+            {renderMobileMenu}
+            {renderMenu}
+        </div>
+    </BrowserRouter>;
 }

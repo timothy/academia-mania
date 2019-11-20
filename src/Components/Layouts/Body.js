@@ -55,7 +55,7 @@ export default props => {
     let history = useHistory();
     let [postState, setPostState] = useState(myState.posts);// why does setPostState not update badge count???? or re-render component???
     let upVote = (id) => {
-        let objIndex = myState.posts.findIndex((obj => obj.id == id));
+        let objIndex = myState.posts.findIndex((obj => obj.id === id));
         return (
             <Fab key={"upVote4309lk" + id} color="primary" aria-label="add" className={classes.fab}
                  onClick={() => {
@@ -70,7 +70,7 @@ export default props => {
         )
     };
     let downVote = (id) => {
-        let objIndex = myState.posts.findIndex((obj => obj.id == id));
+        let objIndex = myState.posts.findIndex((obj => obj.id === id));
         return (
             <Fab key={"downVote0940v" + id} color="primary" aria-label="add" className={classes.fab}
                  onClick={() => {
