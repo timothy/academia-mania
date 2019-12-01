@@ -53,7 +53,7 @@ export default props => {
     const classes = useStyles();
 
     let history = useHistory();
-    let [postState, setPostState] = useState(getState("posts"));// why does setPostState not update badge count???? or re-render component???
+    let [postState, setPostState] = useState(getState("posts"));
     let upVote = (id) => {
         let objIndex = postState.findIndex((obj => obj.id === id));
         return (

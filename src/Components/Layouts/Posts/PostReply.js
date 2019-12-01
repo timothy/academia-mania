@@ -1,19 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, Container, Comment, Form, Header} from 'semantic-ui-react'
-import {myState, stateBind, getState} from '../../../PubSub/pub-sub'
+import { updateState, getState} from '../../../PubSub/pub-sub'
 import 'semantic-ui-css/semantic.min.css'
 
-console.log("main area");
 let curComment = "";
 
 let handleTextAreaChange = (event) => {
-    console.log(curComment);
     curComment = event.target.value;
 };
 
-let onClickComment = () =>{
-
+const loginFooData = {
+    avatar: "/doctoravatar.png",
+    author: "Dr. Dan",
+    metadata: "Just Now",
+    text: "",
+    actions: [{action: "Reply"}],
+    group: []
 };
+
 
 const avatar = (url) => {
     return !!url ? (<Comment.Avatar src={url}/>) : "";
@@ -60,27 +64,36 @@ const createCommentWithReply = (comment, index) => (
     </Comment>
 );
 
-let comments = getState('comments')[0];
-const PostReply = () => <Container style={{margin: 20}}>
+const PostReply = () => {
+    let [comments, setComments] = useState(getState('comments')[0]);
 
-    <Comment.Group>
-        <Header as='h3' dividing>
-            {comments.header}
-        </Header>
-        {console.log("inside of posts", comments)}
-        {
-            comments.comments.map((obj, index) => {
-                console.log(obj.comments, "HERE!!!!");
-                return createCommentWithReply(obj, index)
-            })
-        }
+    const onClickComment = () => {
+        loginFooData.text = curComment;
+        let tmpComments = JSON.parse(JSON.stringify(comments));
+        tmpComments.comments.push(loginFooData);
+        setComments(tmpComments);
+        updateState("comments", [comments]);
+    };
 
-        <Form reply>
-            <Form.TextArea onChange={handleTextAreaChange}/>
-            <Button onClick={onClickComment} content='Add Reply' labelPosition='left' icon='edit' primary/>
-        </Form>
-    </Comment.Group>
-</Container>;
+    return <Container style={{margin: 20}}>
+
+        <Comment.Group>
+            <Header as='h3' dividing>
+                {comments.header}
+            </Header>
+            {
+                comments.comments.map((obj, index) => {
+                    return createCommentWithReply(obj, index)
+                })
+            }
+
+            <Form reply>
+                <Form.TextArea onChange={handleTextAreaChange}/>
+                <Button onClick={onClickComment} content='Add Reply' labelPosition='left' icon='edit' primary/>
+            </Form>
+        </Comment.Group>
+    </Container>
+};
 
 
 export default PostReply
