@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button, Container, Comment, Form, Header} from 'semantic-ui-react'
+import {myState, stateBind, getState} from '../../../PubSub/pub-sub'
 import 'semantic-ui-css/semantic.min.css'
 
 console.log("main area");
@@ -8,45 +9,6 @@ let curComment = "";
 let handleTextAreaChange = (event) => {
     console.log(curComment);
     curComment = event.target.value;
-};
-
-let sampleComments = {
-    header: "Comments",
-    comments: [
-        {
-            avatar: "https://react.semantic-ui.com/images/avatar/small/matt.jpg",
-            author: "Matt",
-            metadata: "Today at 5:42PM",
-            text: "How artistic!",
-            actions: [{action: "Reply"}],
-            group: [
-                {
-                    avatar: "https://react.semantic-ui.com/images/avatar/small/jenny.jpg",
-                    author: "Jenny Hess",
-                    metadata: "Just now",
-                    text: "This has been very useful for my research. Thanks as well!",
-                    actions: [{action: "Reply"}],
-                    group: []
-                }
-            ]
-        },
-        {
-            avatar: "https://react.semantic-ui.com/images/avatar/small/elliot.jpg",
-            author: "Elliot Fu",
-            metadata: "Yesterday at 12:30AM",
-            text: "Nice research. Thanks!",
-            actions: [{action: "Reply"}],
-            group: []
-        },
-        {
-            avatar: "https://react.semantic-ui.com/images/avatar/small/joe.jpg",
-            author: "Joe Henderson",
-            metadata: "5 days ago",
-            text: "Dude, this is awesome. Thanks so much",
-            actions: [{action: "Reply"}],
-            group: []
-        }
-    ]
 };
 
 let onClickComment = () =>{
@@ -98,7 +60,7 @@ const createCommentWithReply = (comment, index) => (
     </Comment>
 );
 
-let comments = sampleComments;
+let comments = getState('comments')[0];
 const PostReply = () => <Container style={{margin: 20}}>
 
     <Comment.Group>
@@ -115,7 +77,7 @@ const PostReply = () => <Container style={{margin: 20}}>
 
         <Form reply>
             <Form.TextArea onChange={handleTextAreaChange}/>
-            <Button onClick={} content='Add Reply' labelPosition='left' icon='edit' primary/>
+            <Button onClick={onClickComment} content='Add Reply' labelPosition='left' icon='edit' primary/>
         </Form>
     </Comment.Group>
 </Container>;
