@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {withStyles, makeStyles} from '@material-ui/core/styles';
 import {Paper, TableRow, TableHead, TableCell, TableBody, Table, Badge, Fab} from '@material-ui/core'
-import {myState} from '../../PubSub/pub-sub'
+import { stateBind, getState} from '../../PubSub/pub-sub'
 import { useHistory } from "react-router-dom";
 
 import {ThumbUp as ThumbUpIcon,
@@ -53,14 +53,14 @@ export default props => {
     const classes = useStyles();
 
     let history = useHistory();
-    let [postState, setPostState] = useState(myState.posts);// why does setPostState not update badge count???? or re-render component???
+    let [postState, setPostState] = useState(getState("posts"));// why does setPostState not update badge count???? or re-render component???
     let upVote = (id) => {
-        let objIndex = myState.posts.findIndex((obj => obj.id === id));
+        let objIndex = postState.findIndex((obj => obj.id === id));
         return (
             <Fab key={"upVote4309lk" + id} color="primary" aria-label="add" className={classes.fab}
                  onClick={() => {
-                     myState.posts[objIndex].up_vote++;
-                     setPostState([...myState.posts]);
+                     stateBind().posts[objIndex].up_vote++;
+                     setPostState(getState("posts"));
                  }}>
                 <Badge key={"Ubadge" + objIndex} className={classes.margin} badgeContent={postState[objIndex].up_vote}
                        color="primary"><
@@ -70,14 +70,14 @@ export default props => {
         )
     };
     let downVote = (id) => {
-        let objIndex = myState.posts.findIndex((obj => obj.id === id));
+        let objIndex = postState.findIndex((obj => obj.id === id));
         return (
             <Fab key={"downVote0940v" + id} color="primary" aria-label="add" className={classes.fab}
                  onClick={() => {
-                     myState.posts[objIndex].down_vote++;
-                     setPostState([...myState.posts]);
+                     stateBind().posts[objIndex].down_vote++;
+                     setPostState(getState("posts"));
                  }}>
-                <Badge className={classes.margin} badgeContent={myState.posts[objIndex].down_vote} color="primary"><
+                <Badge className={classes.margin} badgeContent={postState[objIndex].down_vote} color="primary"><
                     ThumbDownIcon> </ThumbDownIcon>
                 </Badge>
             </Fab>
@@ -103,7 +103,7 @@ export default props => {
         }
     }
 
-    const rows = myState.posts.map(
+    const rows = postState.map(
         obj => createData(obj.title, obj.description, obj.topic, obj.up_votes, obj.down_votes, obj.id)
     );
 
