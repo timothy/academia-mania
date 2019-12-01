@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import mediumDraftExporter from 'medium-draft/lib/exporter';
 import {addToState, myState} from '../../../PubSub/pub-sub'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -19,12 +20,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
+    let history = useHistory();
     const classes = useStyles();
     let [editorState, updateEditorState] = useState(createEditorState());
     //let [editorState, updateEditorState] = useState(createEditorState(data));// with content
     const saveBtn = () => {
         const renderedHTML = mediumDraftExporter(editorState.getCurrentContent());
-        console.log(props.postType);
         addToState("posts", {
             renderedHTML: renderedHTML,
             title: "Test",
@@ -35,8 +36,8 @@ export default props => {
             topic: props.postType,
             id: myState.posts.length
         });
-        console.log(renderedHTML.toString());
-        console.log("saveBtn was clicked")
+        console.log("saveBtn was clicked");
+        history.push(`/viewpost/${myState.posts.length - 1}`);
     };
 
     const renderSaveBtn = (
