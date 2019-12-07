@@ -8,11 +8,11 @@ export default props => {
     return <div>
         <h1>{id}</h1>
         <MyEditor postType={id.replace("Post", "").trim()}/>
-        <button onClick={() => {
+{/*        <button onClick={() => {
             props.history.push('/');
             console.log(props, "posts props")
         }}>
             body
-        </button>
+        </button>*/}
     </div>
 }

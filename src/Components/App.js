@@ -342,14 +342,14 @@ export default props => {
                     </ListItem>
                 </List>
                 <Divider/>
-                <List>
-                    {menuItems.map((obj, index) => (
-                        <ListItem button key={obj.feed} component={feedLink(obj.feed.replace("Feed","").trim())}>
-                            <ListItemIcon>{obj.icon}</ListItemIcon>
-                            <ListItemText primary={obj.feed}/>
-                        </ListItem>
-                    ))}
-                </List>
+                {/*<List>*/}
+                {/*    {menuItems.map((obj, index) => (*/}
+                {/*        <ListItem button key={obj.feed} component={feedLink(obj.feed.replace("Feed","").trim())}>*/}
+                {/*            <ListItemIcon>{obj.icon}</ListItemIcon>*/}
+                {/*            <ListItemText primary={obj.feed}/>*/}
+                {/*        </ListItem>*/}
+                {/*    ))}*/}
+                {/*</List>*/}
                 <Divider/>
                 <List>
                     {menuItems.map((obj, index) => (
@@ -380,10 +380,9 @@ export default props => {
                         return (<div>404 Path "{props.location.pathname}" not found</div>)
                     }}/>
                 </Switch>
-                {search.title}
             </main>
             {renderMobileMenu}
-            {renderMenu}
+           {/* {renderMenu}*/}
         </div>
     </BrowserRouter>;
 }
