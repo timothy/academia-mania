@@ -4,8 +4,9 @@
    * `npm -v`
    * `node -v`
 3. Using the terminal navigate to the project, e.g. `cd path/to/academia-mania`
-4. Run `npm start` in the terminal
-5. Go to your web browser and navigate to [http://localhost:3000](http://localhost:3000)
+4. Do `npm install` in the terminal make sure you are connected to the internet
+5. Run `npm start` in the terminal
+6. Go to your web browser and navigate to [http://localhost:3000](http://localhost:3000)
    * note: this app was developed and tested using **google chrome**.
 
 ## Available Scripts
