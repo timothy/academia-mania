@@ -1,3 +1,9 @@
+# Academia Mania
+
+Academia Mania is the first attempt at a social media app specifically for academic use. I built this app for a class while completing my master's degree in computer science at Georgia Tech. While doing research I found that social media presence is lacking for higher education.
+
+
+
 # Steps to view and run app
 1. [Install latest stable lts version of Node.js](https://nodejs.org/en/)
 2. Go to your terminal and make sure `npm` and `node` are installed
